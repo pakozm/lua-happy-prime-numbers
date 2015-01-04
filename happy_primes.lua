@@ -22,30 +22,26 @@
 
 ]]
 
+local square = {} for i=0,9 do square[i]=i*i end
 function sqrsum(n)
   local sum = 0
-  while n > 0 do
-    sum=sum + (n%10)^2
-    n=math.floor(n/10)
-  end
+  while n > 0 do sum, n = sum + square[n % 10], math.floor(n / 10) end
   return sum
 end
 
 function isHappy(n)
-  while n~=1 and n~=4 do
-    n=sqrsum(n)
-  end
-  return n==1
+  while n ~= 1 and n ~= 4 do n = sqrsum(n) end
+  return n == 1
 end
 
-local prime_numbers = {2,3}
+local prime_numbers = { 2, 3 }
 function isPrime(n)
   if n == 1 then return true end
   for _,i in ipairs(prime_numbers) do
-    if n==i then return true end
+    if n == i then return true end
     if n%i == 0 then return false end
   end
-  for i=prime_numbers[#prime_numbers],math.floor(n/2)+1,2 do
+  for i = prime_numbers[#prime_numbers], math.floor(n/2)+1, 2 do
     if n%i == 0 then return false end
   end
   if n > prime_numbers[#prime_numbers] then
@@ -57,4 +53,5 @@ end
 local a=tonumber(arg[1]) or 1
 local b=tonumber(arg[2]) or a+500
 local c=tonumber(arg[3]) or 1
+
 for n=a,b,c do if isHappy(n) and isPrime(n) then print(n) end end
